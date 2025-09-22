@@ -9,14 +9,21 @@ type ProdutoType = {
   descricao: string;
 }
 
-export default function App() {
-  const [produtos, setProdutos] = useState<ProdutoType[]>([]);
-  const handleForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+ 
+ export default function App() {
+    const [produtos, setProdutos] = useState<ProdutoType[]>([]);
+  
+    function handleForm(event: React.FormEvent<HTMLFormElement>) {
+      event.preventDefault(); 
+    
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const data  = {
+      nome: formData.get('nome') as string,
+      preco: Number(formData.get('preco')),
+      urlfoto: formData.get('urlfoto') as string,
+      descricao: formData.get('descricao') as string,
+    }
 
     fetch('/api/produtos', {
       method: 'POST',
@@ -32,6 +39,7 @@ export default function App() {
     form.reset();
 
   }
+
 
   return (
     <>
