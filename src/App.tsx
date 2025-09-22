@@ -39,8 +39,15 @@ type ProdutoType = {
     form.reset();
 
   }
-
-
+function adicionarCarrinho(produtoId: number) {
+const clienteId ="12345"
+fetch('/api/carrinho', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ produtoId, clienteId }),
+})
   return (
     <>
       <div>
@@ -52,7 +59,7 @@ type ProdutoType = {
           <input type="text" name="descricao" placeholder="Descrição" />
           <button type="submit">Cadastrar</button>
         </form>
-        <h1>Lista de produtos</h1>
+        <h1>Adicionar ao Carrinho</h1>
       </div>
       {
         produtos.map((produto) => (
@@ -61,8 +68,9 @@ type ProdutoType = {
             <p>R${produto.preco}</p>
             <img src={produto.urlfoto} alt={produto.nome} width="200" />
             <p>{produto.descricao}</p>
+            <button onClick={()=>adicionarCarrinho(produto._id)}>Adicionar ao Carrinho</button>
           </div>
         ))}
     </>
+  )}
   )
-}
